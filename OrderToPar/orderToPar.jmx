@@ -19,17 +19,17 @@
           </elementProp>
           <elementProp name="test_data_file" elementType="Argument">
             <stringProp name="Argument.name">test_data_file</stringProp>
-            <stringProp name="Argument.value">/home/leshanr/Desktop/ordering/ordering_mobile_perf/OrderToPar/test_data.csv</stringProp>
+            <stringProp name="Argument.value">/OrderToPar/test_data.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="document_file" elementType="Argument">
             <stringProp name="Argument.name">document_file</stringProp>
-            <stringProp name="Argument.value">/home/leshanr/Desktop/ordering/ordering_mobile_perf/OrderToPar/doc_id.csv</stringProp>
+            <stringProp name="Argument.value">/OrderToPar/doc_id.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="parGroup_ID_file" elementType="Argument">
             <stringProp name="Argument.name">parGroup_ID_file</stringProp>
-            <stringProp name="Argument.value">/home/leshanr/Desktop/ordering/ordering_mobile_perf/OrderToPar/par_group_id.csv</stringProp>
+            <stringProp name="Argument.value">/OrderToPar/par_group_id.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
