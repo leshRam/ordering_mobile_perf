@@ -14,12 +14,12 @@
           </elementProp>
           <elementProp name="test_data_file" elementType="Argument">
             <stringProp name="Argument.name">test_data_file</stringProp>
-            <stringProp name="Argument.value">OrderToPar/test_data.csv</stringProp>
+            <stringProp name="Argument.value">/OrderToPar/test_data.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="document_file" elementType="Argument">
             <stringProp name="Argument.name">document_file</stringProp>
-            <stringProp name="Argument.value">OrderToPar/doc_id.csv</stringProp>
+            <stringProp name="Argument.value">/OrderToPar/doc_id.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="protocol" elementType="Argument">
@@ -36,10 +36,10 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${__P(lc,1)}</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(us,1)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${__P(ru,1)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1505907364000</longProp>
         <longProp name="ThreadGroup.end_time">1505907364000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -99,7 +99,7 @@ try{
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">${__P(lc,1)}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(us,1)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(us,20)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(ru,1)}</stringProp>
         <longProp name="ThreadGroup.start_time">1505108739000</longProp>
         <longProp name="ThreadGroup.end_time">1505109039000</longProp>
@@ -490,14 +490,18 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
         </BeanShellSampler>
         <hashTree/>
+        <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+          <stringProp name="ConstantTimer.delay">600</stringProp>
+        </ConstantTimer>
+        <hashTree/>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="create_par_group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${__P(lc,1)}</stringProp>
+          <stringProp name="LoopController.loops">${__P(lc,5)}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(us,1)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(us,11)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(ru,1)}</stringProp>
         <longProp name="ThreadGroup.start_time">1505907504000</longProp>
         <longProp name="ThreadGroup.end_time">1505907504000</longProp>
@@ -582,22 +586,6 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
                 </elementProp>
               </collectionProp>
             </HeaderManager>
-            <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get_docNumber" enabled="true">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">docNumber</stringProp>
-              <stringProp name="RegexExtractor.regex">&quot;documentNumber&quot;:&quot;(.+?)&quot;,</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default">DocumentNumberIsNull</stringProp>
-              <stringProp name="RegexExtractor.match_number">1</stringProp>
-            </RegexExtractor>
-            <hashTree/>
-            <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="Bean_docNumber" enabled="false">
-              <stringProp name="BeanShellAssertion.query">${__setProperty(documentNumber, ${docNumber})};</stringProp>
-              <stringProp name="BeanShellAssertion.filename"></stringProp>
-              <stringProp name="BeanShellAssertion.parameters"></stringProp>
-              <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
-            </BeanShellAssertion>
             <hashTree/>
           </hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="34 /api/account.updateCustomerDefaults" enabled="true">
@@ -805,18 +793,6 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BS_Write_Doc_ID" enabled="true">
-          <stringProp name="BeanShellSampler.query">import java.io.*;
-
- String filename= &quot;${document_file}&quot;;
- FileWriter fw = new FileWriter(filename,true); //the true will append the new data
- fw.write(&quot;${docNumber}&quot; + &quot;\n&quot;);//appends the string to the file
- fw.close();</stringProp>
-          <stringProp name="BeanShellSampler.filename"></stringProp>
-          <stringProp name="BeanShellSampler.parameters"></stringProp>
-          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
-        </BeanShellSampler>
-        <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="create_new_par_group" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">true</boolProp>
@@ -1115,7 +1091,7 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;customer&quot;:&quot;${__property(userId1)}&quot;,&quot;defaults&quot;:{&quot;par&quot;:&quot;${__property(parGroupId1)}&quot;}}</stringProp>
+                  <stringProp name="Argument.value">{&quot;customer&quot;:&quot;${userId}&quot;,&quot;defaults&quot;:{&quot;par&quot;:&quot;${__property(parGroupId1)}&quot;}}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -1183,9 +1159,9 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${__P(lc,1)}</stringProp>
+          <stringProp name="LoopController.loops">${__P(lc,5)}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(us,1)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(us,10)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(ru,1)}</stringProp>
         <longProp name="ThreadGroup.start_time">1505907884000</longProp>
         <longProp name="ThreadGroup.end_time">1505907884000</longProp>
@@ -1205,18 +1181,6 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
           <stringProp name="filename">${test_data_file}</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames">dmprxy_esysco.net_JSESSIONID,path,baseUrl,opco,customerId,account,userType,userId,mmSessionId,customersKey</stringProp>
-          <boolProp name="ignoreFirstLine">false</boolProp>
-          <stringProp name="delimiter">,</stringProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="get_documentId" enabled="true">
-          <stringProp name="filename">${document_file}</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="variableNames">docNumber</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
           <stringProp name="delimiter">,</stringProp>
           <boolProp name="quotedData">false</boolProp>
@@ -1599,7 +1563,7 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get_docNumber" enabled="true">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get_docNumber" enabled="false">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">docNumber</stringProp>
               <stringProp name="RegexExtractor.regex">&quot;documentNumber&quot;:&quot;(.+?)&quot;,</stringProp>
@@ -1608,15 +1572,36 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
               <stringProp name="RegexExtractor.match_number">1</stringProp>
             </RegexExtractor>
             <hashTree/>
-            <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="Bean_docNumber" enabled="true">
+            <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="Bean_docNumber" enabled="false">
               <stringProp name="BeanShellAssertion.query">${__setProperty(docNumber1, ${docNumber})};</stringProp>
               <stringProp name="BeanShellAssertion.filename"></stringProp>
               <stringProp name="BeanShellAssertion.parameters"></stringProp>
               <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
             </BeanShellAssertion>
             <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get_docNumber" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">docNumber</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;documentNumber&quot;:&quot;(.+?)&quot;,</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default">DocumentNumberIsNull</stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+            </RegexExtractor>
+            <hashTree/>
           </hashTree>
         </hashTree>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BS_Write_Doc_ID" enabled="true">
+          <stringProp name="BeanShellSampler.query">import java.io.*;
+
+ String filename= &quot;${document_file}&quot;;
+ FileWriter fw = new FileWriter(filename,true); //the true will append the new data
+ fw.write(&quot;${docNumber}&quot; + &quot;\n&quot;);//appends the string to the file
+ fw.close();</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="navigate_to_cart" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">true</boolProp>
@@ -1757,13 +1742,25 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="get_documentId" enabled="true">
+            <stringProp name="filename">${document_file}</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">docNumber</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="176 /api/orders.submit" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;documentNumber&quot;:${__property(docNumber1)},&quot;userType&quot;:3,&quot;uniqueDataKeys&quot;:&quot;9162298-CS,5972320-CS&quot;,&quot;actionFlag&quot;:&quot;&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;documentNumber&quot;:${docNumber},&quot;userType&quot;:3,&quot;uniqueDataKeys&quot;:&quot;9162298-CS,5972320-CS&quot;,&quot;actionFlag&quot;:&quot;&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -1953,9 +1950,9 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${__P(lc,1)}</stringProp>
+          <stringProp name="LoopController.loops">${__P(lc,5)}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(us,1)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(us,10)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(ru,1)}</stringProp>
         <longProp name="ThreadGroup.start_time">1505907966000</longProp>
         <longProp name="ThreadGroup.end_time">1505907966000</longProp>
@@ -2044,7 +2041,7 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
           </hashTree>
         </hashTree>
       </hashTree>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
@@ -2079,6 +2076,158 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
         </objProp>
         <stringProp name="filename"></stringProp>
       </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">/home/leshanr/Desktop/ordering/ordering_mobile_perf/OrderToPar/multiUser_70.csv</stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph" enabled="false">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table" enabled="false">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <kg.apc.jmeter.vizualizers.CorrectedResultCollector guiclass="kg.apc.jmeter.vizualizers.TransactionsPerSecondGui" testclass="kg.apc.jmeter.vizualizers.CorrectedResultCollector" testname="jp@gc - Transactions per Second" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">/home/leshanr/Desktop/ordering/ordering_mobile_perf/OrderToPar/tps_70.csv</stringProp>
+        <longProp name="interval_grouping">1000</longProp>
+        <boolProp name="graph_aggregated">false</boolProp>
+        <stringProp name="include_sample_labels"></stringProp>
+        <stringProp name="exclude_sample_labels"></stringProp>
+        <stringProp name="start_offset"></stringProp>
+        <stringProp name="end_offset"></stringProp>
+        <boolProp name="include_checkbox_state">false</boolProp>
+        <boolProp name="exclude_checkbox_state">false</boolProp>
+      </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
       <hashTree/>
     </hashTree>
     <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="WorkBench" enabled="true">
