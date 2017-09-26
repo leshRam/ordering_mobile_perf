@@ -53,6 +53,68 @@
         <boolProp name="ThreadGroup.delayedStart">true</boolProp>
       </ThreadGroup>
       <hashTree>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="Delete_Test_Data_File" enabled="true">
+          <stringProp name="BeanShellSampler.query">import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+
+try{
+	String filename= vars.get(&quot;test_data_file&quot;);
+     File file = new File(filename);
+     if(file.delete())
+     {
+     	System.out.println(&quot;Cookie File deleted successfully&quot;);
+     }
+     else
+     {
+     	System.out.println(&quot;Failed to delete the Cookie file&quot;);
+     }
+	//file.delete();
+}catch(Exception e){
+	e.printStackTrace();
+}
+
+
+try{
+	String filename= vars.get(&quot;document_file&quot;);
+     File file = new File(filename);
+     if(file.delete())
+     {
+     	System.out.println(&quot;Doc ID File deleted successfully&quot;);
+     }
+     else
+     {
+     	System.out.println(&quot;Failed to delete the Doc ID file&quot;);
+     }
+	//file.delete();
+}catch(Exception e){
+	e.printStackTrace();
+}
+
+
+try{
+	String filename= vars.get(&quot;parGroup_ID_file&quot;);
+     File file = new File(filename);
+     if(file.delete())
+     {
+     	System.out.println(&quot;par Group ID File deleted successfully&quot;);
+     }
+     else
+     {
+     	System.out.println(&quot;Failed to delete the par Group ID file&quot;);
+     }
+	//file.delete();
+}catch(Exception e){
+	e.printStackTrace();
+}
+</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="login_ordering_app" enabled="true">
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
@@ -72,7 +134,7 @@ vars.put(&quot;session&quot;, UUID.randomUUID().toString());</stringProp>
             <stringProp name="script">vars.put(&quot;date&quot;,&quot;${__time(MM/dd/yyyy hh:mma)}&quot;);</stringProp>
           </BeanShellPreProcessor>
           <hashTree/>
-          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Delete_Test_Data_File" enabled="true">
+          <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="Delete_Test_Data_File" enabled="false">
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -2108,6 +2170,42 @@ try{
       </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
       <hashTree/>
       <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
