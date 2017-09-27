@@ -4,7 +4,7 @@
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="env" elementType="Argument">
@@ -19,17 +19,17 @@
           </elementProp>
           <elementProp name="test_data_file" elementType="Argument">
             <stringProp name="Argument.name">test_data_file</stringProp>
-            <stringProp name="Argument.value">test_data.csv</stringProp>
+            <stringProp name="Argument.value">/home/leshanr/Desktop/ordering/ordering_mobile_perf/OrderToPar/test_data.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="document_file" elementType="Argument">
             <stringProp name="Argument.name">document_file</stringProp>
-            <stringProp name="Argument.value">doc_id.csv</stringProp>
+            <stringProp name="Argument.value">/home/leshanr/Desktop/ordering/ordering_mobile_perf/OrderToPar/doc_id.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="parGroup_ID_file" elementType="Argument">
             <stringProp name="Argument.name">parGroup_ID_file</stringProp>
-            <stringProp name="Argument.value">par_group_id.csv</stringProp>
+            <stringProp name="Argument.value">/home/leshanr/Desktop/ordering/ordering_mobile_perf/OrderToPar/par_group_id.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -41,9 +41,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${__P(lc,1)}</stringProp>
+          <stringProp name="LoopController.loops">${__P(lc,5)}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(us,1)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(us,10)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(ru,1)}</stringProp>
         <longProp name="ThreadGroup.start_time">1505108739000</longProp>
         <longProp name="ThreadGroup.end_time">1505109039000</longProp>
