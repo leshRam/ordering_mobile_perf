@@ -363,3 +363,89 @@ Caused by: java.lang.ClassNotFoundException: javafx.embed.swing.JFXPanel
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[?:1.8.0_131]
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[?:1.8.0_131]
 	... 33 more
+2017-09-28 09:38:03,471 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2017-09-28 09:38:03,471 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2017-09-28 09:38:03,475 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2017-09-28 09:38:03,779 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Delete_Test_Data_File
+2017-09-28 09:38:03,779 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group Delete_Test_Data_File.
+2017-09-28 09:38:03,779 INFO o.a.j.e.StandardJMeterEngine: Thread will start next loop on error
+2017-09-28 09:38:03,780 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=1 ramp-up=1 perThread=1000.0 delayedStart=false
+2017-09-28 09:38:03,783 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2017-09-28 09:38:03,783 INFO o.a.j.e.StandardJMeterEngine: Waiting for thread group: Delete_Test_Data_File to finish before starting next group
+2017-09-28 09:38:04,781 INFO o.a.j.t.JMeterThread: Thread started: Delete_Test_Data_File 1-1
+2017-09-28 09:38:04,807 INFO o.a.j.t.JMeterThread: Thread is done: Delete_Test_Data_File 1-1
+2017-09-28 09:38:04,807 INFO o.a.j.t.JMeterThread: Thread finished: Delete_Test_Data_File 1-1
+2017-09-28 09:38:04,808 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 2 : login_ordering_app
+2017-09-28 09:38:04,812 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group login_ordering_app.
+2017-09-28 09:38:04,813 INFO o.a.j.e.StandardJMeterEngine: Thread will start next loop on error
+2017-09-28 09:38:04,813 INFO o.a.j.t.ThreadGroup: Starting thread group... number=2 threads=1 ramp-up=1 perThread=1000.0 delayedStart=false
+2017-09-28 09:38:04,841 INFO o.a.j.t.ThreadGroup: Started thread group number 2
+2017-09-28 09:38:04,842 INFO o.a.j.e.StandardJMeterEngine: Waiting for thread group: login_ordering_app to finish before starting next group
+2017-09-28 09:38:05,815 INFO o.a.j.t.JMeterThread: Thread started: login_ordering_app 2-1
+2017-09-28 09:38:05,816 INFO o.a.j.s.FileServer: Stored: userCredentials.csv
+2017-09-28 09:38:08,365 INFO o.a.j.g.a.Start: Stopping test
+2017-09-28 09:38:08,442 INFO o.a.j.t.JMeterThread: Stopping: login_ordering_app 2-1
+2017-09-28 09:38:08,442 WARN o.a.j.t.JMeterThread: Interrupting: login_ordering_app 2-1 sampler: login_to_ordering_app
+2017-09-28 09:38:08,446 INFO o.a.j.t.JMeterThread: Thread finished: login_ordering_app 2-1
+2017-09-28 09:38:08,446 INFO o.a.j.e.StandardJMeterEngine: Test stopped - no more thread groups will be started
+2017-09-28 09:38:08,446 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2017-09-28 09:38:08,446 INFO o.a.j.s.FileServer: Close: userCredentials.csv
+2017-09-28 09:38:08,447 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2017-09-28 09:38:12,234 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2017-09-28 09:38:12,234 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2017-09-28 09:38:12,236 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2017-09-28 09:38:12,419 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : Delete_Test_Data_File
+2017-09-28 09:38:12,419 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group Delete_Test_Data_File.
+2017-09-28 09:38:12,419 INFO o.a.j.e.StandardJMeterEngine: Thread will start next loop on error
+2017-09-28 09:38:12,419 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=1 ramp-up=1 perThread=1000.0 delayedStart=false
+2017-09-28 09:38:12,425 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2017-09-28 09:38:12,425 INFO o.a.j.e.StandardJMeterEngine: Waiting for thread group: Delete_Test_Data_File to finish before starting next group
+2017-09-28 09:38:13,419 INFO o.a.j.t.JMeterThread: Thread started: Delete_Test_Data_File 1-1
+2017-09-28 09:38:13,434 INFO o.a.j.t.JMeterThread: Thread is done: Delete_Test_Data_File 1-1
+2017-09-28 09:38:13,434 INFO o.a.j.t.JMeterThread: Thread finished: Delete_Test_Data_File 1-1
+2017-09-28 09:38:13,436 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 2 : login_ordering_app
+2017-09-28 09:38:13,436 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group login_ordering_app.
+2017-09-28 09:38:13,437 INFO o.a.j.e.StandardJMeterEngine: Thread will start next loop on error
+2017-09-28 09:38:13,437 INFO o.a.j.t.ThreadGroup: Starting thread group... number=2 threads=1 ramp-up=1 perThread=1000.0 delayedStart=false
+2017-09-28 09:38:13,492 INFO o.a.j.t.ThreadGroup: Started thread group number 2
+2017-09-28 09:38:13,493 INFO o.a.j.e.StandardJMeterEngine: Waiting for thread group: login_ordering_app to finish before starting next group
+2017-09-28 09:38:14,437 INFO o.a.j.t.JMeterThread: Thread started: login_ordering_app 2-1
+2017-09-28 09:38:14,439 INFO o.a.j.s.FileServer: Stored: userCredentials.csv
+2017-09-28 09:38:28,677 INFO o.a.j.t.JMeterThread: Thread is done: login_ordering_app 2-1
+2017-09-28 09:38:28,677 INFO o.a.j.t.JMeterThread: Thread finished: login_ordering_app 2-1
+2017-09-28 09:38:28,678 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 3 : create_par_group
+2017-09-28 09:38:28,679 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group create_par_group.
+2017-09-28 09:38:28,679 INFO o.a.j.e.StandardJMeterEngine: Thread will start next loop on error
+2017-09-28 09:38:28,680 INFO o.a.j.t.ThreadGroup: Starting thread group... number=3 threads=1 ramp-up=1 perThread=1000.0 delayedStart=false
+2017-09-28 09:38:28,712 INFO o.a.j.t.ThreadGroup: Started thread group number 3
+2017-09-28 09:38:28,713 INFO o.a.j.e.StandardJMeterEngine: Waiting for thread group: create_par_group to finish before starting next group
+2017-09-28 09:38:29,681 INFO o.a.j.t.JMeterThread: Thread started: create_par_group 3-1
+2017-09-28 09:38:29,682 INFO o.a.j.s.FileServer: Stored: OrderToPar/test_data.csv
+2017-09-28 09:38:35,296 INFO o.a.j.s.FileServer: Stored: parGroupName.csv
+2017-09-28 09:38:41,547 INFO o.a.j.t.JMeterThread: Thread is done: create_par_group 3-1
+2017-09-28 09:38:41,548 INFO o.a.j.t.JMeterThread: Thread finished: create_par_group 3-1
+2017-09-28 09:38:41,549 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 4 : Order_creation_via_order_to_par
+2017-09-28 09:38:41,550 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group Order_creation_via_order_to_par.
+2017-09-28 09:38:41,550 INFO o.a.j.e.StandardJMeterEngine: Thread will start next loop on error
+2017-09-28 09:38:41,551 INFO o.a.j.t.ThreadGroup: Starting thread group... number=4 threads=1 ramp-up=1 perThread=1000.0 delayedStart=false
+2017-09-28 09:38:41,565 INFO o.a.j.t.ThreadGroup: Started thread group number 4
+2017-09-28 09:38:41,566 INFO o.a.j.e.StandardJMeterEngine: Waiting for thread group: Order_creation_via_order_to_par to finish before starting next group
+2017-09-28 09:38:42,551 INFO o.a.j.t.JMeterThread: Thread started: Order_creation_via_order_to_par 4-1
+2017-09-28 09:38:42,553 INFO o.a.j.s.FileServer: Stored: OrderToPar/doc_id.csv
+2017-09-28 09:39:03,563 INFO o.a.j.t.JMeterThread: Stopping because end time detected by thread: Order_creation_via_order_to_par 4-1
+2017-09-28 09:39:03,564 INFO o.a.j.t.JMeterThread: Thread finished: Order_creation_via_order_to_par 4-1
+2017-09-28 09:39:03,566 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 5 : logout_ordering_app
+2017-09-28 09:39:03,566 INFO o.a.j.e.StandardJMeterEngine: Starting 1 threads for group logout_ordering_app.
+2017-09-28 09:39:03,566 INFO o.a.j.e.StandardJMeterEngine: Thread will start next loop on error
+2017-09-28 09:39:03,567 INFO o.a.j.t.ThreadGroup: Starting thread group... number=5 threads=1 ramp-up=1 perThread=1000.0 delayedStart=false
+2017-09-28 09:39:03,568 INFO o.a.j.t.ThreadGroup: Started thread group number 5
+2017-09-28 09:39:03,568 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2017-09-28 09:39:04,567 INFO o.a.j.t.JMeterThread: Thread started: logout_ordering_app 5-1
+2017-09-28 09:39:06,140 INFO o.a.j.t.JMeterThread: Thread is done: logout_ordering_app 5-1
+2017-09-28 09:39:06,140 INFO o.a.j.t.JMeterThread: Thread finished: logout_ordering_app 5-1
+2017-09-28 09:39:06,142 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2017-09-28 09:39:06,142 INFO o.a.j.s.FileServer: Close: OrderToPar/test_data.csv
+2017-09-28 09:39:06,143 INFO o.a.j.s.FileServer: Close: parGroupName.csv
+2017-09-28 09:39:06,144 INFO o.a.j.s.FileServer: Close: userCredentials.csv
+2017-09-28 09:39:06,144 INFO o.a.j.s.FileServer: Close: OrderToPar/doc_id.csv
+2017-09-28 09:39:06,145 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
