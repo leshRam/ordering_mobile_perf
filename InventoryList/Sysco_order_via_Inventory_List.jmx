@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="3.2" jmeter="3.2 r1790748">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Sysco_order_via_parGroups" enabled="true">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Sysco_order_via_Inventory_List" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.serialize_threadgroups">true</boolProp>
@@ -9,22 +9,17 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="test_data_file" elementType="Argument">
             <stringProp name="Argument.name">test_data_file</stringProp>
-            <stringProp name="Argument.value">OrderToPar/test_data.csv</stringProp>
+            <stringProp name="Argument.value">InventoryList/test_data.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="document_file" elementType="Argument">
             <stringProp name="Argument.name">document_file</stringProp>
-            <stringProp name="Argument.value">OrderToPar/doc_id.csv</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="pars_file" elementType="Argument">
-            <stringProp name="Argument.name">pars_file</stringProp>
-            <stringProp name="Argument.value">OrderToPar/par_group_id.csv</stringProp>
+            <stringProp name="Argument.value">InventoryList/doc_id.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="item_file" elementType="Argument">
             <stringProp name="Argument.name">item_file</stringProp>
-            <stringProp name="Argument.value">OrderToPar/items.csv</stringProp>
+            <stringProp name="Argument.value">InventoryList/items.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="host" elementType="Argument">
@@ -39,7 +34,7 @@
           </elementProp>
           <elementProp name="port" elementType="Argument">
             <stringProp name="Argument.name">port</stringProp>
-            <stringProp name="Argument.value">${__P(port,)}</stringProp>
+            <stringProp name="Argument.value">${__P(port,443)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -111,23 +106,6 @@ try{
      else
      {
      	System.out.println(&quot;Failed to delete the Doc ID file&quot;);
-     }
-	//file.delete();
-}catch(Exception e){
-	e.printStackTrace();
-}
-
-
-try{
-	String filename= vars.get(&quot;pars_file&quot;);
-     File file = new File(filename);
-     if(file.delete())
-     {
-     	System.out.println(&quot;Par ID File deleted successfully&quot;);
-     }
-     else
-     {
-     	System.out.println(&quot;Failed to delete the Par ID file&quot;);
      }
 	//file.delete();
 }catch(Exception e){
@@ -543,7 +521,7 @@ try{
         </BeanShellSampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="create_par_group" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Order_creation_via_inventory_list" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -551,8 +529,8 @@ try{
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${__P(us,1)}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${__P(ru,1)}</stringProp>
-        <longProp name="ThreadGroup.start_time">1505907504000</longProp>
-        <longProp name="ThreadGroup.end_time">1505907504000</longProp>
+        <longProp name="ThreadGroup.start_time">1505907884000</longProp>
+        <longProp name="ThreadGroup.end_time">1505907884000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">${__P(td,120)}</stringProp>
         <stringProp name="ThreadGroup.delay">${__P(sd,1)}</stringProp>
@@ -570,79 +548,117 @@ try{
           <stringProp name="shareMode">shareMode.all</stringProp>
         </CSVDataSet>
         <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="click_on_OrderGuide" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="click_on_createOrder" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="navigate_order_guide" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/generic?url=guide</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">https://sysco-qa.madmobile.com/</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="X-Requested-With" elementType="Header">
-                  <stringProp name="Header.name">X-Requested-With</stringProp>
-                  <stringProp name="Header.value">XMLHttpRequest</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Cache-Control" elementType="Header">
-                  <stringProp name="Header.name">Cache-Control</stringProp>
-                  <stringProp name="Header.value">no-cache</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate, br</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="update_customer_defaults" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="create_order" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;customer&quot;:&quot;${userId}&quot;,&quot;defaults&quot;:{&quot;par&quot;:0}}</stringProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;data&quot;: {},&#xd;
+	&quot;showRequiredStars&quot;: false,&#xd;
+	&quot;showInputClass&quot;: false,&#xd;
+	&quot;method&quot;: &quot;POST&quot;,&#xd;
+	&quot;url&quot;: &quot;/api/orders.create&quot;,&#xd;
+	&quot;action&quot;: null,&#xd;
+	&quot;form&quot;: [{&#xd;
+		&quot;fieldName&quot;: &quot;orderName&quot;,&#xd;
+		&quot;group&quot;: &quot;basic&quot;,&#xd;
+		&quot;type&quot;: &quot;text&quot;,&#xd;
+		&quot;validation&quot;: &quot;required&quot;,&#xd;
+		&quot;value&quot;: &quot;${__time(MM/dd/yyyy hh:mm a)}&quot;,&#xd;
+		&quot;label&quot;: &quot;Order Name&quot;,&#xd;
+		&quot;attributes&quot;: {&#xd;
+			&quot;maxlength&quot;: 20&#xd;
+		},&#xd;
+		&quot;key&quot;: &quot;orderName&quot;,&#xd;
+		&quot;id&quot;: 1&#xd;
+	}, {&#xd;
+		&quot;fieldName&quot;: &quot;override&quot;,&#xd;
+		&quot;group&quot;: &quot;default&quot;,&#xd;
+		&quot;type&quot;: &quot;hidden&quot;,&#xd;
+		&quot;key&quot;: &quot;override&quot;,&#xd;
+		&quot;id&quot;: 2&#xd;
+	}, {&#xd;
+		&quot;fieldName&quot;: &quot;deliveryDate&quot;,&#xd;
+		&quot;group&quot;: &quot;basic&quot;,&#xd;
+		&quot;type&quot;: &quot;text&quot;,&#xd;
+		&quot;placeholder&quot;: &quot;Delivery Date&quot;,&#xd;
+		&quot;validation&quot;: &quot;required&quot;,&#xd;
+		&quot;value&quot;: &quot;11/05/2017&quot;,&#xd;
+		&quot;attributes&quot;: {&#xd;
+			&quot;min&quot;: &quot;11/01/2017&quot;&#xd;
+		},&#xd;
+		&quot;label&quot;: &quot;Delivery Date&quot;,&#xd;
+		&quot;key&quot;: &quot;deliveryDate&quot;,&#xd;
+		&quot;id&quot;: 3&#xd;
+	}, {&#xd;
+		&quot;fieldName&quot;: &quot;poNumber&quot;,&#xd;
+		&quot;group&quot;: &quot;basic&quot;,&#xd;
+		&quot;type&quot;: &quot;text&quot;,&#xd;
+		&quot;label&quot;: &quot;PO Number&quot;,&#xd;
+		&quot;validation&quot;: &quot;&quot;,&#xd;
+		&quot;value&quot;: &quot;&quot;,&#xd;
+		&quot;key&quot;: &quot;poNumber&quot;,&#xd;
+		&quot;id&quot;: 4&#xd;
+	}, {&#xd;
+		&quot;fieldName&quot;: &quot;option&quot;,&#xd;
+		&quot;group&quot;: &quot;default&quot;,&#xd;
+		&quot;type&quot;: &quot;select&quot;,&#xd;
+		&quot;options&quot;: [&#xd;
+                {&#xd;
+                    &quot;label&quot;: &quot;Add Products From&quot;&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;label&quot;: &quot;Order Guide&quot;&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;label&quot;: &quot;Lists&quot;&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;label&quot;: &quot;Historical Orders&quot;&#xd;
+                },&#xd;
+                {&#xd;
+                    &quot;label&quot;: &quot;Product Catalog&quot;&#xd;
+                }&#xd;
+          ],&#xd;
+		&quot;key&quot;: &quot;option&quot;,&#xd;
+		&quot;id&quot;: 5,&#xd;
+		&quot;value&quot;: &quot;&quot;&#xd;
+	}, {&#xd;
+		&quot;fieldName&quot;: &quot;buttonClick&quot;,&#xd;
+		&quot;group&quot;: &quot;default&quot;,&#xd;
+		&quot;type&quot;: &quot;hidden&quot;,&#xd;
+		&quot;value&quot;: &quot;Start New Order&quot;,&#xd;
+		&quot;key&quot;: &quot;buttonClick&quot;,&#xd;
+		&quot;id&quot;: 6&#xd;
+	}, {&#xd;
+		&quot;id&quot;: 7,&#xd;
+		&quot;fieldName&quot;: &quot;addedItemNumber&quot;,&#xd;
+		&quot;value&quot;: &quot;9162298-CS&quot;,&#xd;
+		&quot;type&quot;: &quot;hidden&quot;&#xd;
+	}, {&#xd;
+		&quot;id&quot;: 8,&#xd;
+		&quot;fieldName&quot;: &quot;addedItemQuantity&quot;,&#xd;
+		&quot;value&quot;: 5,&#xd;
+		&quot;type&quot;: &quot;hidden&quot;&#xd;
+	}, {&#xd;
+		&quot;id&quot;: 9,&#xd;
+		&quot;fieldName&quot;: &quot;addedFromFlag&quot;,&#xd;
+		&quot;value&quot;: &quot;P&quot;,&#xd;
+		&quot;type&quot;: &quot;hidden&quot;&#xd;
+	}, {&#xd;
+		&quot;id&quot;: 10,&#xd;
+		&quot;fieldName&quot;: &quot;returnUrl&quot;,&#xd;
+		&quot;value&quot;: &quot;/products/inventory&quot;,&#xd;
+		&quot;type&quot;: &quot;hidden&quot;&#xd;
+	}]&#xd;
+}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -650,218 +666,8 @@ try{
             <stringProp name="HTTPSampler.domain">${host}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/account.updateCustomerDefaults</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">https://sysco-qa.madmobile.com/</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="X-Requested-With" elementType="Header">
-                  <stringProp name="Header.name">X-Requested-With</stringProp>
-                  <stringProp name="Header.value">XMLHttpRequest</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Cache-Control" elementType="Header">
-                  <stringProp name="Header.name">Cache-Control</stringProp>
-                  <stringProp name="Header.value">no-cache</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate, br</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="products_pricing" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;skus&quot;:&quot;8805806-CS,5972320-CS,5418884-CS,9035601-CS,6697890-CS,6697890-EA,7203540-CS,1956804-CS,8492514-CS,1871169-CS,1871169-EA,1841974-CS,5482593-CS,1829496-CS,3723616-CS,3724689-CS,3717279-CS,3689346-CS,3722576-CS,1841842-CS,9768342-CS,1505312-CS,2393049-CS,1829359-CS,1829797-CS,0255903-CS,3407287-CS,2331690-CS,2331690-EA,9714023-CS,1829807-CS,1841982-CS,3740255-CS,3715679-CS,1842253-CS,3152299-CS,1405263-CS,6200370-CS,1394618-CS,9162298-CS&quot;,&quot;listType&quot;:&quot;H&quot;,&quot;date&quot;:&quot;20170830&quot;,&quot;isPriceNextDayFlag&quot;:true,&quot;timezoneOffset&quot;:-330}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/products.pricing</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">https://sysco-qa.madmobile.com/</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="X-Requested-With" elementType="Header">
-                  <stringProp name="Header.name">X-Requested-With</stringProp>
-                  <stringProp name="Header.value">XMLHttpRequest</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Cache-Control" elementType="Header">
-                  <stringProp name="Header.name">Cache-Control</stringProp>
-                  <stringProp name="Header.value">no-cache</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate, br</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="bazaarvoice_ratings" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;pid&quot;:[&quot;8805806-CS,5972320-CS,5418884-CS,9035601-CS,6697890-CS,6697890-EA,7203540-CS,1956804-CS,8492514-CS,1871169-CS,1871169-EA,1841974-CS,5482593-CS,1829496-CS,3723616-CS,3724689-CS,3717279-CS,3689346-CS,3722576-CS,1841842-CS,9768342-CS,1505312-CS,2393049-CS,1829359-CS,1829797-CS,0255903-CS,3407287-CS,2331690-CS,2331690-EA,9714023-CS,1829807-CS,1841982-CS,3740255-CS,3715679-CS,1842253-CS,3152299-CS,1405263-CS,6200370-CS,1394618-CS,9162298-CS,2557940-CS,1727841-CS,1883131-CS,1239680-CS,1894575-CS,2557361-CS,2557361-EA,8478992-CS,0625893-CS,5640610-CS,2508646-CS,4361432-CS,4361432-EA,3069895-CS,4589628-CS,4350963-CS&quot;]}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/bazaarvoice.ratings</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">https://sysco-qa.madmobile.com/</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="X-Requested-With" elementType="Header">
-                  <stringProp name="Header.name">X-Requested-With</stringProp>
-                  <stringProp name="Header.value">XMLHttpRequest</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Cache-Control" elementType="Header">
-                  <stringProp name="Header.name">Cache-Control</stringProp>
-                  <stringProp name="Header.value">no-cache</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate, br</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-        </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="create_new_par_group" enabled="true">
-          <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
-        </TransactionController>
-        <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="create_par_group_name" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;name&quot;:&quot;${parGroupName}&quot;}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/pars.createGroupName</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api/orders.create</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -880,7 +686,7 @@ try{
                 </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
+                  <stringProp name="Header.value">application/json; charset=UTF-8</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Encoding" elementType="Header">
                   <stringProp name="Header.name">Accept-Encoding</stringProp>
@@ -892,38 +698,100 @@ try{
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
+                  <stringProp name="Header.value">mm-session-id=${mmSessionId}; baseUrl=${baseUrl}; path=${path}; account=${account}; userType=${userType}; dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID}; opco=${opco}; customers=${customersKey}; customerId=${customerId}</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Host</stringProp>
+                  <stringProp name="Header.value">sysco-qa.madmobile.com</stringProp>
                 </elementProp>
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get_parGroup" enabled="true">
-              <stringProp name="JSONPostProcessor.referenceNames">parGroupId</stringProp>
-              <stringProp name="JSONPostProcessor.jsonPathExprs">$..[?(@.name==&quot;${parGroupName}&quot;)].id</stringProp>
-              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
-              <stringProp name="Sample.scope">all</stringProp>
-            </JSONPostProcessor>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get_docNumber" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">docNumber</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;documentNumber&quot;:&quot;(.+?)&quot;,</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default">error</stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+            </RegexExtractor>
             <hashTree/>
-            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="parGroup" enabled="true">
-              <stringProp name="filename">parGroupName.csv</stringProp>
-              <stringProp name="fileEncoding"></stringProp>
-              <stringProp name="variableNames">parGroupName</stringProp>
-              <stringProp name="delimiter">,</stringProp>
-              <boolProp name="quotedData">false</boolProp>
-              <boolProp name="recycle">true</boolProp>
-              <boolProp name="stopThread">false</boolProp>
-              <stringProp name="shareMode">shareMode.all</stringProp>
-              <boolProp name="ignoreFirstLine">false</boolProp>
-            </CSVDataSet>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="new_order" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;isPoReq&quot;:0}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/generic?url=%2Fnew-order%2FM%3D${__urlencode(${__time(MM/dd/yyyy hh:mm a)})}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Accept-Language" elementType="Header">
+                  <stringProp name="Header.name">Accept-Language</stringProp>
+                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
+                </elementProp>
+                <elementProp name="X-Requested-With" elementType="Header">
+                  <stringProp name="Header.name">X-Requested-With</stringProp>
+                  <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="Cache-Control" elementType="Header">
+                  <stringProp name="Header.name">Cache-Control</stringProp>
+                  <stringProp name="Header.value">no-cache</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Encoding" elementType="Header">
+                  <stringProp name="Header.name">Accept-Encoding</stringProp>
+                  <stringProp name="Header.value">gzip, deflate, br</stringProp>
+                </elementProp>
+                <elementProp name="User-Agent" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:56.0) Gecko/20100101 Firefox/56.0</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Cookie</stringProp>
+                  <stringProp name="Header.value">mm-session-id=${mmSessionId}; baseUrl=${baseUrl}; path=${path}; account=${account}; userType=${userType}; dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID}; opco=${opco}; customers=${customersKey}; customerId=${customerId}</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Referer</stringProp>
+                  <stringProp name="Header.value">https://sysco-qa.madmobile.com/</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BS_Write_par_group_ID" enabled="true">
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BS_Write_Doc_ID" enabled="true">
           <stringProp name="BeanShellSampler.query">import java.io.*;
 
- String filename= &quot;${pars_file}&quot;;
+ String filename= &quot;${document_file}&quot;;
  FileWriter fw = new FileWriter(filename,true); //the true will append the new data
- fw.write(&quot;${parGroupId}&quot; + &quot;\n&quot;);//appends the string to the file
+ fw.write(&quot;${docNumber}&quot; + &quot;\n&quot;);//appends the string to the file
  fw.close();</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
@@ -1133,27 +1001,115 @@ try{
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="click_on_Par_Group" enabled="true">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="add_items" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="92 /api/account.updateCustomerDefaults" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="get_items" enabled="true">
+            <stringProp name="filename">${item_file}</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">item1,item1Desc,item2,item2Desc</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="get_doc_number" enabled="true">
+            <stringProp name="filename">${document_file}</stringProp>
+            <stringProp name="fileEncoding"></stringProp>
+            <stringProp name="variableNames">docNumber</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
+            <stringProp name="delimiter">,</stringProp>
+            <boolProp name="quotedData">false</boolProp>
+            <boolProp name="recycle">true</boolProp>
+            <boolProp name="stopThread">false</boolProp>
+            <stringProp name="shareMode">shareMode.all</stringProp>
+          </CSVDataSet>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="syncOrderQuantity" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;customer&quot;:&quot;${userId}&quot;,&quot;defaults&quot;:{&quot;par&quot;:&quot;${parGroupId}&quot;}}</stringProp>
+                <elementProp name="items[0][documentNumber]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][documentNumber]</stringProp>
+                  <stringProp name="Argument.value">${docNumber}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][addedFromFlag]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][addedFromFlag]</stringProp>
+                  <stringProp name="Argument.value">P</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][name]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][name]</stringProp>
+                  <stringProp name="Argument.value">${item1Desc}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][uniqueDataKey]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][uniqueDataKey]</stringProp>
+                  <stringProp name="Argument.value">${item1}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][quantity]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][quantity]</stringProp>
+                  <stringProp name="Argument.value">1</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][orderStatus]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][orderStatus]</stringProp>
+                  <stringProp name="Argument.value"></stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][listType]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][listType]</stringProp>
+                  <stringProp name="Argument.value">H</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][sortOrder]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][sortOrder]</stringProp>
+                  <stringProp name="Argument.value"></stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="currentDate" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">currentDate</stringProp>
+                  <stringProp name="Argument.value">${__time(MM/dd/yyyy)}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="isLimitedSync" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">isLimitedSync</stringProp>
+                  <stringProp name="Argument.value">true</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 </elementProp>
               </collectionProp>
             </elementProp>
             <stringProp name="HTTPSampler.domain">${host}</stringProp>
             <stringProp name="HTTPSampler.port">${port}</stringProp>
             <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/account.updateCustomerDefaults</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/orders.syncOrderQuantity</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -1166,33 +1122,17 @@ try{
           <hashTree>
             <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
-                <elementProp name="Referer" elementType="Header">
-                  <stringProp name="Header.name">Referer</stringProp>
-                  <stringProp name="Header.value">https://sysco-qa.madmobile.com/</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Language" elementType="Header">
-                  <stringProp name="Header.name">Accept-Language</stringProp>
-                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
-                </elementProp>
                 <elementProp name="Accept" elementType="Header">
                   <stringProp name="Header.name">Accept</stringProp>
                   <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
                 </elementProp>
-                <elementProp name="X-Requested-With" elementType="Header">
-                  <stringProp name="Header.name">X-Requested-With</stringProp>
-                  <stringProp name="Header.value">XMLHttpRequest</stringProp>
-                </elementProp>
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Cache-Control" elementType="Header">
-                  <stringProp name="Header.name">Cache-Control</stringProp>
-                  <stringProp name="Header.value">no-cache</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded; charset=UTF-8</stringProp>
                 </elementProp>
                 <elementProp name="Accept-Encoding" elementType="Header">
                   <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate, br</stringProp>
+                  <stringProp name="Header.value">gzip, deflate</stringProp>
                 </elementProp>
                 <elementProp name="User-Agent" elementType="Header">
                   <stringProp name="Header.name">User-Agent</stringProp>
@@ -1200,455 +1140,129 @@ try{
                 </elementProp>
                 <elementProp name="" elementType="Header">
                   <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
+                  <stringProp name="Header.value">mm-session-id=${mmSessionId}; baseUrl=${baseUrl}; path=${path}; account=${account}; userType=${userType}; dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID}; opco=${opco}; customerId=${customerId}</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="syncOrderQuantity" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="items[0][documentNumber]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][documentNumber]</stringProp>
+                  <stringProp name="Argument.value">${docNumber}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][addedFromFlag]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][addedFromFlag]</stringProp>
+                  <stringProp name="Argument.value">P</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][name]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][name]</stringProp>
+                  <stringProp name="Argument.value">${item2Desc}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][uniqueDataKey]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][uniqueDataKey]</stringProp>
+                  <stringProp name="Argument.value">${item2}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][quantity]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][quantity]</stringProp>
+                  <stringProp name="Argument.value">1</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][orderStatus]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][orderStatus]</stringProp>
+                  <stringProp name="Argument.value"></stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][listType]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][listType]</stringProp>
+                  <stringProp name="Argument.value">H</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="items[0][sortOrder]" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">items[0][sortOrder]</stringProp>
+                  <stringProp name="Argument.value"></stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="currentDate" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">currentDate</stringProp>
+                  <stringProp name="Argument.value">${__time(MM/dd/yyyy)}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+                <elementProp name="isLimitedSync" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                  <stringProp name="Argument.name">isLimitedSync</stringProp>
+                  <stringProp name="Argument.value">true</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${host}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+            <stringProp name="HTTPSampler.path">/api/orders.syncOrderQuantity</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">application/x-www-form-urlencoded; charset=UTF-8</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Encoding" elementType="Header">
+                  <stringProp name="Header.name">Accept-Encoding</stringProp>
+                  <stringProp name="Header.value">gzip, deflate</stringProp>
+                </elementProp>
+                <elementProp name="User-Agent" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Cookie</stringProp>
+                  <stringProp name="Header.value">mm-session-id=${mmSessionId}; baseUrl=${baseUrl}; path=${path}; account=${account}; userType=${userType}; dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID}; opco=${opco}; customerId=${customerId}</stringProp>
                 </elementProp>
               </collectionProp>
             </HeaderManager>
             <hashTree/>
           </hashTree>
         </hashTree>
-      </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Order_creation_via_order_to_par" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${__P(lc,1)}</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(us,1)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${__P(ru,1)}</stringProp>
-        <longProp name="ThreadGroup.start_time">1505907884000</longProp>
-        <longProp name="ThreadGroup.end_time">1505907884000</longProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration">${__P(td,120)}</stringProp>
-        <stringProp name="ThreadGroup.delay">${__P(sd,1)}</stringProp>
-      </ThreadGroup>
-      <hashTree>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="get_cookie" enabled="true">
-          <stringProp name="filename">${test_data_file}</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="variableNames">dmprxy_esysco.net_JSESSIONID,path,baseUrl,opco,customerId,account,userType,userId,mmSessionId,customersKey</stringProp>
-          <boolProp name="ignoreFirstLine">false</boolProp>
-          <stringProp name="delimiter">,</stringProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="get_parGroupId" enabled="true">
-          <stringProp name="filename">${pars_file}</stringProp>
-          <stringProp name="fileEncoding"></stringProp>
-          <stringProp name="variableNames">parGroupId</stringProp>
-          <boolProp name="ignoreFirstLine">false</boolProp>
-          <stringProp name="delimiter">,</stringProp>
-          <boolProp name="quotedData">false</boolProp>
-          <boolProp name="recycle">true</boolProp>
-          <boolProp name="stopThread">false</boolProp>
-          <stringProp name="shareMode">shareMode.all</stringProp>
-        </CSVDataSet>
-        <hashTree/>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="add_inventory_items_to_par_group" enabled="true">
-          <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
-        </TransactionController>
-        <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add_item_to_par_group" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;group&quot;:&quot;${parGroupId}&quot;,&quot;sku&quot;:&quot;${item1}&quot;,&quot;value&quot;:10}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/pars.saveParData</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add_item_to_par_group" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;group&quot;:&quot;${parGroupId}&quot;,&quot;sku&quot;:&quot;${item2}&quot;,&quot;value&quot;:10}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/pars.saveParData</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-        </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="click_on_OrderToPar" enabled="true">
-          <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
-        </TransactionController>
-        <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="order_to_par" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;parGroupId&quot;:&quot;${parGroupId}&quot;}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/pars.orderToPar</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="get_cut_OffTime" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;addedItem&quot;:{&quot;sku&quot;:&quot;9162298-CS&quot;,&quot;quantity&quot;:5},&quot;isCreateOrder&quot;:true,&quot;currentDateTime&quot;:&quot;${date}&quot;,&quot;addedFromFlag&quot;:&quot;P&quot;,&quot;returnUrl&quot;:&quot;/products/inventory&quot;}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
-            <stringProp name="HTTPSampler.path">/api/orders.getCutOffTime</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID};path=${path};baseUrl=${baseUrl};opco=${opco};customerId=${customerId};account=${account};userType=${userType};mm-session-id=${mmSessionId};customers=${customersKey}</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-          </hashTree>
-        </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="click_on_createOrder" enabled="true">
-          <boolProp name="TransactionController.includeTimers">false</boolProp>
-          <boolProp name="TransactionController.parent">true</boolProp>
-        </TransactionController>
-        <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="create_order" enabled="true">
-            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&#xd;
-	&quot;data&quot;: {},&#xd;
-	&quot;showRequiredStars&quot;: false,&#xd;
-	&quot;showInputClass&quot;: false,&#xd;
-	&quot;method&quot;: &quot;POST&quot;,&#xd;
-	&quot;url&quot;: &quot;/api/orders.create&quot;,&#xd;
-	&quot;action&quot;: null,&#xd;
-	&quot;form&quot;: [{&#xd;
-		&quot;fieldName&quot;: &quot;orderName&quot;,&#xd;
-		&quot;group&quot;: &quot;basic&quot;,&#xd;
-		&quot;type&quot;: &quot;text&quot;,&#xd;
-		&quot;validation&quot;: &quot;required&quot;,&#xd;
-		&quot;value&quot;: &quot;${__time(MM/dd/yyyy hh:mm a)}&quot;,&#xd;
-		&quot;label&quot;: &quot;Order Name&quot;,&#xd;
-		&quot;attributes&quot;: {&#xd;
-			&quot;maxlength&quot;: 20&#xd;
-		},&#xd;
-		&quot;key&quot;: &quot;orderName&quot;,&#xd;
-		&quot;id&quot;: 1&#xd;
-	}, {&#xd;
-		&quot;fieldName&quot;: &quot;override&quot;,&#xd;
-		&quot;group&quot;: &quot;default&quot;,&#xd;
-		&quot;type&quot;: &quot;hidden&quot;,&#xd;
-		&quot;key&quot;: &quot;override&quot;,&#xd;
-		&quot;id&quot;: 2&#xd;
-	}, {&#xd;
-		&quot;fieldName&quot;: &quot;deliveryDate&quot;,&#xd;
-		&quot;group&quot;: &quot;basic&quot;,&#xd;
-		&quot;type&quot;: &quot;text&quot;,&#xd;
-		&quot;placeholder&quot;: &quot;Delivery Date&quot;,&#xd;
-		&quot;validation&quot;: &quot;required&quot;,&#xd;
-		&quot;value&quot;: &quot;11/05/2017&quot;,&#xd;
-		&quot;attributes&quot;: {&#xd;
-			&quot;min&quot;: &quot;11/01/2017&quot;&#xd;
-		},&#xd;
-		&quot;label&quot;: &quot;Delivery Date&quot;,&#xd;
-		&quot;key&quot;: &quot;deliveryDate&quot;,&#xd;
-		&quot;id&quot;: 3&#xd;
-	}, {&#xd;
-		&quot;fieldName&quot;: &quot;poNumber&quot;,&#xd;
-		&quot;group&quot;: &quot;basic&quot;,&#xd;
-		&quot;type&quot;: &quot;text&quot;,&#xd;
-		&quot;label&quot;: &quot;PO Number&quot;,&#xd;
-		&quot;validation&quot;: &quot;&quot;,&#xd;
-		&quot;value&quot;: &quot;&quot;,&#xd;
-		&quot;key&quot;: &quot;poNumber&quot;,&#xd;
-		&quot;id&quot;: 4&#xd;
-	}, {&#xd;
-		&quot;fieldName&quot;: &quot;option&quot;,&#xd;
-		&quot;group&quot;: &quot;default&quot;,&#xd;
-		&quot;type&quot;: &quot;select&quot;,&#xd;
-		&quot;options&quot;: [&#xd;
-                {&#xd;
-                    &quot;label&quot;: &quot;Add Products From&quot;&#xd;
-                },&#xd;
-                {&#xd;
-                    &quot;label&quot;: &quot;Order Guide&quot;&#xd;
-                },&#xd;
-                {&#xd;
-                    &quot;label&quot;: &quot;Lists&quot;&#xd;
-                },&#xd;
-                {&#xd;
-                    &quot;label&quot;: &quot;Historical Orders&quot;&#xd;
-                },&#xd;
-                {&#xd;
-                    &quot;label&quot;: &quot;Product Catalog&quot;&#xd;
-                }&#xd;
-          ],&#xd;
-		&quot;key&quot;: &quot;option&quot;,&#xd;
-		&quot;id&quot;: 5,&#xd;
-		&quot;value&quot;: &quot;&quot;&#xd;
-	}, {&#xd;
-		&quot;fieldName&quot;: &quot;buttonClick&quot;,&#xd;
-		&quot;group&quot;: &quot;default&quot;,&#xd;
-		&quot;type&quot;: &quot;hidden&quot;,&#xd;
-		&quot;value&quot;: &quot;Start New Order&quot;,&#xd;
-		&quot;key&quot;: &quot;buttonClick&quot;,&#xd;
-		&quot;id&quot;: 6&#xd;
-	}, {&#xd;
-		&quot;id&quot;: 7,&#xd;
-		&quot;fieldName&quot;: &quot;addedItemNumber&quot;,&#xd;
-		&quot;value&quot;: &quot;9162298-CS&quot;,&#xd;
-		&quot;type&quot;: &quot;hidden&quot;&#xd;
-	}, {&#xd;
-		&quot;id&quot;: 8,&#xd;
-		&quot;fieldName&quot;: &quot;addedItemQuantity&quot;,&#xd;
-		&quot;value&quot;: 5,&#xd;
-		&quot;type&quot;: &quot;hidden&quot;&#xd;
-	}, {&#xd;
-		&quot;id&quot;: 9,&#xd;
-		&quot;fieldName&quot;: &quot;addedFromFlag&quot;,&#xd;
-		&quot;value&quot;: &quot;P&quot;,&#xd;
-		&quot;type&quot;: &quot;hidden&quot;&#xd;
-	}, {&#xd;
-		&quot;id&quot;: 10,&#xd;
-		&quot;fieldName&quot;: &quot;returnUrl&quot;,&#xd;
-		&quot;value&quot;: &quot;/products/inventory&quot;,&#xd;
-		&quot;type&quot;: &quot;hidden&quot;&#xd;
-	}]&#xd;
-}</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${host}</stringProp>
-            <stringProp name="HTTPSampler.port">${port}</stringProp>
-            <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/api/orders.create</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
-              <collectionProp name="HeaderManager.headers">
-                <elementProp name="Accept" elementType="Header">
-                  <stringProp name="Header.name">Accept</stringProp>
-                  <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
-                </elementProp>
-                <elementProp name="Content-Type" elementType="Header">
-                  <stringProp name="Header.name">Content-Type</stringProp>
-                  <stringProp name="Header.value">application/json; charset=UTF-8</stringProp>
-                </elementProp>
-                <elementProp name="Accept-Encoding" elementType="Header">
-                  <stringProp name="Header.name">Accept-Encoding</stringProp>
-                  <stringProp name="Header.value">gzip, deflate</stringProp>
-                </elementProp>
-                <elementProp name="User-Agent" elementType="Header">
-                  <stringProp name="Header.name">User-Agent</stringProp>
-                  <stringProp name="Header.value">Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Cookie</stringProp>
-                  <stringProp name="Header.value">mm-session-id=${mmSessionId}; baseUrl=${baseUrl}; path=${path}; account=${account}; userType=${userType}; dmprxy_esysco.net_JSESSIONID=${dmprxy_esysco.net_JSESSIONID}; opco=${opco}; customers=${customersKey}; customerId=${customerId}</stringProp>
-                </elementProp>
-                <elementProp name="" elementType="Header">
-                  <stringProp name="Header.name">Host</stringProp>
-                  <stringProp name="Header.value">sysco-qa.madmobile.com</stringProp>
-                </elementProp>
-              </collectionProp>
-            </HeaderManager>
-            <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get_docNumber" enabled="true">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">docNumber</stringProp>
-              <stringProp name="RegexExtractor.regex">&quot;documentNumber&quot;:&quot;(.+?)&quot;,</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default">error</stringProp>
-              <stringProp name="RegexExtractor.match_number">1</stringProp>
-            </RegexExtractor>
-            <hashTree/>
-          </hashTree>
-        </hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BS_Write_Doc_ID" enabled="true">
-          <stringProp name="BeanShellSampler.query">import java.io.*;
-
- String filename= &quot;${document_file}&quot;;
- FileWriter fw = new FileWriter(filename,true); //the true will append the new data
- fw.write(&quot;${docNumber}&quot; + &quot;\n&quot;);//appends the string to the file
- fw.close();</stringProp>
-          <stringProp name="BeanShellSampler.filename"></stringProp>
-          <stringProp name="BeanShellSampler.parameters"></stringProp>
-          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
-        </BeanShellSampler>
-        <hashTree/>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="submit_order" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">true</boolProp>
